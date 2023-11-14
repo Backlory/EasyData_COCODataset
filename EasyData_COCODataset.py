@@ -9,14 +9,13 @@ Description:
 
 Copyright (c) 2023 by Backlory, (email: dbdx_liyaning@126.com), All Rights Reserved.
 '''
-
-import cv2
 import os
-import torch
+import cv2
 from PIL import Image
 from torch.utils.data import Dataset
 import numpy as np
 import json
+import pycocotools.mask as maskUtils
 
 class EasyData_COCODataset(Dataset):
     def __init__(self, root_dir):
@@ -75,7 +74,6 @@ class EasyData_COCODataset(Dataset):
                 category = self.categories[category_id - 1]['name']
                 categories.append(category)
                 # mask
-                import pycocotools.mask as maskUtils
                 rle_obj = {"counts": annotation_info['mask'],
                         "size": [height, width]}
                 mask = maskUtils.decode(rle_obj)
